@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Send The Feel</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Reenie+Beanie&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+    <header
+        class="sticky z-10 top-0 left-0 w-full px-4 py-4 flex items-center justify-center bg-white border-b border-gray-300">
+        <div class="flex items-center justify-between w-full max-w-6xl">
+            <div>
+                <p class="text-xl lg:text-2xl font-hand">stf</p>
+            </div>
+            <div class="flex flex-row items-center space-x-5">
+                <a href="/submit" class="text-sm text-gray-950">Submit</a>
+                <a href="/browse" class="text-sm text-gray-950 underline">Browse</a>
+                <a href="/history" class="text-sm text-gray-950">History</a>
+                <a href="/support" class="text-sm text-gray-950">Support</a>
+            </div>
+        </div>
+    </header>
+    <main class="w-full max-w-6xl space-y-5 mx-auto pt-4 pb-8 sm:pt-8 sm:pb-11 px-4">
+        <div class="max-w-3xl w-full mx-auto">
+            <div
+                class="mb-4 font-[600] text-[32px] leading-[36px] tracking-[-0.025em] text-gray-950 sm:mb-5 sm:text-[48px] sm:leading-[48px]">
+                Browse</div>
+            <div
+                class="mb-6 font-[400] text-[14px] leading-[22px] tracking-[-0.005em] text-gray-700 sm:mb-7 sm:text-[16px] sm:leading-[26px]">
+                Scroll the latest messages or start typing recipient name to find your messages.</div>
+            <div class="grid grid-cols-[1fr_max-content] gap-2 mb-4">
+                <input id="searchInput"
+                    class="flex w-full h-11 px-3 py-1 border border-[#D9D9D9] rounded-lg text-sm transition-colors placeholder:text-gray-500 focus:outline-none focus:border-gray-950 focus:ring-1 focus:ring-gray-200 disabled:pointer-events-none disabled:opacity-70"
+                    placeholder="Enter recipient name...">
+                <button id="searchButton"
+                    class="cursor-pointer inline-flex items-center justify-center gap-2 h-11 px-4 py-2 w-full font-medium text-sm whitespace-nowrap rounded-lg transition-all disabled:pointer-events-none disabled:!text-[#595959] disabled:!border-[#D0D3D9] disabled:!bg-[#D0D3D9] [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-black focus-visible:ring-[1.5px] text-[#FFFFFF] bg-[#171717]">
+                    Search
+                </button>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 place-items-center">
+                <% if (messages.length === 0) { %>
+                    <div class="col-span-full text-center py-8">
+                        <img src="/NotFound.png" alt="No messages found" class="w-full max-w-96 mx-auto mb-4">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">No Messages Found</h3>
+                        <p class="text-gray-600">We couldn't find any messages matching your search.</p>
+                    </div>
+                <% } else { %>
+                <% messages.forEach(message=> { %>
+                    <div
+                        class="flex flex-col justify-between max-w-sm w-full h-full border border-[#D9D9D9] rounded-xl overflow-hidden bg-card shadow">
+                        <a target="_blank" rel="noopener noreferrer"
+                            class="flex flex-col gap-4 w-full h-full p-4 transition-colors duration-200 cursor-pointer"
+                            href="/details/<%= message.slug %>">
+                            <div class="flex items-center px-3 bg-gray-100 border border-[#D9D9D9] w-fit rounded-full">
+                                <p class="font-[400] text-[11px] text-gray-950">To:</p>&nbsp; <p
+                                    class="font-[600] text-[11px] text-gray-950">
+                                    <%= message.recipient %>
+                                </p>
+                            </div>
+                            <div class="font-hand pb-1.5 justify-self-start text-2xl text-gray-950 sm:text-3xl">
+                                <%= message.content %>
+                            </div>
+                        </a>
+                        <div class="flex items-center justify-between gap-2 p-4 border-t border-[#D9D9D9] bg-gray-100">
+                            <div class="flex items-center gap-2 w-full"><img class="w-[40px] h-[40px] rounded shrink-0"
+                                    loading="lazy" decoding="async" src="<%= message.song.image %>"
+                                    alt="Iris by The Goo Goo Dolls">
+                                <div class="flex flex-col gap-[1px]">
+                                    <p class="font-[600] text-[13px] text-gray-950">
+                                        <%= message.song.name %>
+                                    </p>
+                                    <p class="font-[400] text-[11px] text-gray-700">
+                                        <%= message.song.artist %>
+                                    </p>
+                                </div>
+                            </div><a rel="noreferrer noopener" target="_blank" href="<%= message.song.url %>"><img
+                                    src="/spotify.svg" alt="Spotify" width="28" height="28"></a>
+                        </div>
+                    </div>
+                    <% }); %>
+                    <% } %>
+            </div>
+            <div class="absolute size-[1px] opacity-0"></div>
+        </div>
+    </main>
+    <div class="mt-auto">
+        <div class="mx-auto py-8 border-t border-[#D9D9D9] sm:px-6">
+            <div class="flex flex-col items-center justify-center space-y-4">
+                <div class="flex space-x-6"><a class="text-xs text-gray-950 hover:underline sm:text-sm" target="_blank"
+                        rel="noopener noreferrer" href="https://www.instagram.com/ammaricano">Instagram</a>
+                        <a
+                        class="text-xs text-gray-950 hover:underline sm:text-sm" target="_blank"
+                        rel="noopener noreferrer" href="https://wa.me/62895702633030">Send Feedback</a>
+                        <a href="/support"
+                        class="text-xs text-gray-950 hover:underline sm:text-sm inactive" link="">Support</a></div>
+                <div class="text-[10px] text-gray-950 sm:text-xs">© ammaricano. All Rights Reserved.</div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const searchButton = document.getElementById('searchButton');
+
+        function performSearch() {
+            const query = searchInput.value.trim();
+            if (query) {
+                window.location.href = `/browse?q=${encodeURIComponent(query)}`;
+            }
+        }
+
+        searchButton.addEventListener('click', performSearch);
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+        const urlParams = new URLSearchParams(window.location.search);
+        const queryParam = urlParams.get('q');
+        if (queryParam) {
+            searchInput.value = queryParam;
+        }
+    </script>
+</body>
+
+</html>

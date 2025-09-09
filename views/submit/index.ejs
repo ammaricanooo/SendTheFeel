@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Send The Feel</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Reenie+Beanie&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        #results>div {
+            padding: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid #eee;
+        }
+
+        #results>div:last-child {
+            border-bottom: none;
+        }
+
+        #results>div:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+    <header
+        class="sticky z-10 top-0 left-0 w-full px-4 py-4 flex items-center justify-center bg-white border-b border-gray-300">
+        <div class="flex items-center justify-between w-full max-w-6xl">
+            <div>
+                <p class="text-xl lg:text-2xl font-hand">stf</p>
+            </div>
+            <div class="flex flex-row items-center space-x-5">
+                <a href="/submit" class="text-sm text-gray-950 underline">Submit</a>
+                <a href="/browse" class="text-sm text-gray-950">Browse</a>
+                <a href="/history" class="text-sm text-gray-950">History</a>
+                <a href="/support" class="text-sm text-gray-950">Support</a>
+            </div>
+        </div>
+    </header>
+    <main class="w-full max-w-6xl space-y-5 mx-auto pt-4 pb-8 sm:pt-8 sm:pb-11 px-4">
+        <form action="/add" method="POST" class="max-w-3xl w-full space-y-5 mx-auto">
+            <section role="alert"
+                class="flex items-start gap-2 p-4 border border-blue-900 rounded-lg text-white bg-blue-600/10"><svg
+                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-linecap="round"
+                    stroke-linejoin="round" width="24" height="24" stroke="currentColor" stroke-width="2"
+                    class="lucide lucide-icon lucide-info shrink-0 size-4 text-blue-900 sm:size-5">
+                    <circle cx="12" cy="12" r="10" key="1mglay"></circle>
+                    <path d="M12 16v-4" key="1dtifu"></path>
+                    <path d="M12 8h.01" key="e9boi3"></path>
+                </svg>
+                <div class="flex flex-col gap-2">
+                    <p class="font-[600] text-sm leading-[16px] text-black sm:text-[16px] sm:leading-[20px]">Message
+                        Deletion Not Available</p>
+                    <p class="font-[400] text-xs leading-[18px] text-black sm:text-[14px] sm:leading-[22px]">Currently,
+                        we do not support message deletion. Once a message is posted, it cannot be removed. Please
+                        ensure your messages are appropriate before submitting.</p>
+                </div>
+            </section>
+
+            <div>
+                <aside class="flex flex-col gap-2">
+                    <label
+                        class="font-medium text-sm leading-none peer-disabled:pointer-events-none peer-disabled:opacity-70"
+                        for="sender">Sender (optional) // Pengirim (opsional)</label>
+                    <input
+                        class="flex w-full h-11 px-3 py-1 border border-[#D9D9D9] rounded-lg text-sm transition-colors placeholder:text-gray-500 focus:outline-none focus:border-gray-950 focus:ring-1 focus:ring-gray-200 disabled:pointer-events-none disabled:opacity-70"
+                        id="sender" type="text" name="sender" placeholder="Input sender">
+                    <p class="text-sm text-red-500"></p>
+                </aside>
+
+                <aside class="flex flex-col gap-2">
+                    <label
+                        class="font-medium text-sm leading-none peer-disabled:pointer-events-none peer-disabled:opacity-70"
+                        for="recipient">Recipient // Penerima</label>
+                    <input
+                        class="flex w-full h-11 px-3 py-1 border border-[#D9D9D9] rounded-lg text-sm transition-colors placeholder:text-gray-500 focus:outline-none focus:border-gray-950 focus:ring-1 focus:ring-gray-200 disabled:pointer-events-none disabled:opacity-70"
+                        id="recipient" type="text" name="recipient" placeholder="Input recipient">
+                    <p class="text-sm text-red-500"></p>
+                </aside>
+
+                <div class="flex flex-col gap-2">
+                    <label
+                        class="font-medium text-sm leading-none peer-disabled:pointer-events-none peer-disabled:opacity-70"
+                        for="content">Message // Pesan</label>
+                    <textarea
+                        class="flex min-h-[60px] w-full border border-[#D9D9D9] rounded-md px-3 py-2 text-sm transition-colors placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-200 focus:border-gray-950 disabled:cursor-not-allowed disabled:opacity-50 resize-none"
+                        id="content" rows="5" name="content" placeholder="Input message"></textarea>
+                    <p class="text-sm text-red-500"></p>
+                </div>
+
+                <aside class="flex flex-col gap-2 relative">
+                    <label
+                        class="font-medium text-sm leading-none peer-disabled:pointer-events-none peer-disabled:opacity-70"
+                        for="song-search">Song // Lagu</label>
+
+                    <input
+                        class="flex w-full h-11 px-3 py-1 border border-[#D9D9D9] rounded-lg text-sm transition-colors placeholder:text-gray-500 focus:outline-none focus:border-gray-950 focus:ring-1 focus:ring-gray-200 disabled:pointer-events-none disabled:opacity-70"
+                        type="text" id="song-search" placeholder="Type a song name..." autocomplete="off">
+
+                    <div id="results"
+                        class="absolute top-full left-0 w-full bg-white border border-gray-300 shadow-lg max-h-60 overflow-y-auto z-50 hidden overflow-hidden">
+                        <!-- Results will be populated here -->
+                    </div>
+
+                    <input type="hidden" id="song" name="song" required>
+                    <p class="text-sm text-red-500"></p>
+                </aside>
+                <button
+                    class="cursor-pointer inline-flex items-center justify-center gap-2 h-11 px-4 py-2 w-full font-medium text-sm whitespace-nowrap rounded-lg transition-all disabled:pointer-events-none disabled:!text-[#595959] disabled:!border-[#D0D3D9] disabled:!bg-[#D0D3D9] [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-black focus-visible:ring-[1.5px] text-[#FFFFFF] bg-[#171717]"
+                    type="submit">Submit</button>
+            </div>
+        </form>
+    </main>
+    <div class="mt-auto">
+        <div class="mx-auto py-8 border-t border-[#D9D9D9] sm:px-6">
+            <div class="flex flex-col items-center justify-center space-y-4">
+                <div class="flex space-x-6"><a class="text-xs text-gray-950 hover:underline sm:text-sm" target="_blank"
+                        rel="noopener noreferrer" href="https://www.instagram.com/ammaricano">Instagram</a>
+                    <a class="text-xs text-gray-950 hover:underline sm:text-sm" target="_blank"
+                        rel="noopener noreferrer" href="https://wa.me/62895702633030">Send Feedback</a>
+                    <a href="/support" class="text-xs text-gray-950 hover:underline sm:text-sm inactive"
+                        link="">Support</a>
+                </div>
+                <div class="text-[10px] text-gray-950 sm:text-xs">© ammaricano. All Rights Reserved.</div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // document.addEventListener('contextmenu', e => e.preventDefault());
+        // document.addEventListener('keydown', e => {
+        //     // F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+        //     if (
+        //         e.key === 'F12' ||
+        //         (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J')) ||
+        //         (e.ctrlKey && e.key === 'U')
+        //     ) {
+        //         e.preventDefault();
+        //     }
+        // });
+
+        const searchInput = document.getElementById('song-search');
+        const hiddenInput = document.getElementById('song');
+        const resultsBox = document.getElementById('results');
+
+        function positionDropdown() {
+            const inputRect = searchInput.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+            const dropdownHeight = 240;
+
+            const spaceBelow = windowHeight - inputRect.bottom;
+
+            if (spaceBelow < dropdownHeight && inputRect.top > dropdownHeight) {
+                resultsBox.style.top = 'auto';
+                resultsBox.style.bottom = '100%';
+                resultsBox.style.borderRadius = '0.5rem';
+            } else {
+                resultsBox.style.top = '100%';
+                resultsBox.style.bottom = 'auto';
+                resultsBox.style.borderRadius = '0.5rem';
+            }
+        }
+
+        searchInput.addEventListener('input', async () => {
+            const query = searchInput.value.trim();
+            if (!query) {
+                resultsBox.innerHTML = '';
+                resultsBox.classList.add('hidden');
+                return;
+            }
+
+            const res = await fetch(`/search-song?q=${encodeURIComponent(query)}`);
+            const data = await res.json();
+            resultsBox.innerHTML = '';
+
+            if (data.tracks && data.tracks.length > 0) {
+                data.tracks.forEach(track => {
+                    const div = document.createElement('div');
+                    div.classList.add('flex', 'gap-3', 'items-start', 'p-2');
+
+                    div.innerHTML = `
+    <img src="${track.image}" alt="Album Cover" class="w-12 h-12 rounded object-cover">
+    <div class="flex flex-col">
+        <span class="font-semibold text-sm text-gray-900">${track.name}</span>
+        <span class="text-xs text-gray-500">${track.artist}</span>
+    </div>
+`;
+                    div.addEventListener('click', () => {
+                        searchInput.value = `${track.name} — ${track.artist}`;
+                        hiddenInput.value = JSON.stringify({
+                            id: track.id,
+                            name: track.name,
+                            artist: track.artist,
+                            image: track.image,
+                            url: track.url
+                        });
+                        resultsBox.innerHTML = '';
+                        resultsBox.classList.add('hidden');
+                    });
+                    resultsBox.appendChild(div);
+                });
+                resultsBox.classList.remove('hidden');
+                positionDropdown();
+            } else {
+                resultsBox.classList.add('hidden');
+            }
+        });
+
+        window.addEventListener('scroll', () => {
+            if (!resultsBox.classList.contains('hidden')) {
+                positionDropdown();
+            }
+        });
+
+        window.addEventListener('resize', () => {
+            if (!resultsBox.classList.contains('hidden')) {
+                positionDropdown();
+            }
+        });
+
+        searchInput.addEventListener('input', async () => {
+            const query = searchInput.value.trim();
+            if (!query) {
+                resultsBox.innerHTML = '';
+                resultsBox.classList.add('hidden');
+                return;
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!resultsBox.contains(e.target) && e.target !== searchInput) {
+                resultsBox.classList.add('hidden');
+            }
+        });
+    </script>
+    <% if (error) { %>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const params = new URLSearchParams(window.location.search);
+                const errorCode = params.get('error');
+
+                const errorMessages = {
+                    required_fields: 'Semua field wajib diisi.',
+                    invalid_json: 'Format lagu tidak valid.',
+                    missing_song_info: 'Judul dan artis lagu harus diisi.',
+                    server_error: 'Terjadi kesalahan saat menyimpan pesan.'
+                };
+
+                if (errorCode && errorMessages[errorCode]) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: errorMessages[errorCode]
+                    });
+
+                    const url = new URL(window.location.href);
+                    url.searchParams.delete('error');
+                    window.history.replaceState({}, document.title, url.pathname);
+                }
+            });
+        </script>
+        <% } %>
+</body>
+
+</html>
