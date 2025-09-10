@@ -85,6 +85,12 @@ app.post('/add', async (req, res) => {
             return res.redirect('/submit?error=required_fields');
         }
 
+        if (recipient.length > 40 ||
+            sender.length > 40 ||
+            content.length > 500) {
+            return res.redirect('/submit?error=field_too_long');
+        }
+
         let parsedSong;
         try {
             parsedSong = JSON.parse(song);
