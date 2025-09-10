@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Send The Feel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,7 +32,9 @@
     <main class="w-full max-w-6xl space-y-5 mx-auto pt-4 pb-8 sm:pt-8 sm:pb-11 px-4">
         <div class="max-w-md mx-auto text-center">
             <p class="font-[500] text-[16px] mb-3 sm:text-[18px]">Hello,<span
-                    class="font-hand text-3xl ml-2 sm:text-4xl"><%= message.recipient %></span></p>
+                    class="font-hand text-3xl ml-2 sm:text-4xl">
+                    <%= message.recipient %>
+                </span></p>
             <p class="font-[400] text-[14px] leading-[22px] text-slate-600 mb-6 sm:text-[16px] sm:leading-[26px]">
                 There's someone sending you a song, they want you to hear this song that maybe you'll like :)</p><iframe
                 allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" width="100%"
@@ -39,10 +42,13 @@
                 src="https://open.spotify.com/embed/track/<%= message.song.id %>"></iframe>
         </div>
         <div class="mt-8">
-            <p class="text-[14px] text-slate-600 sm:text-[16px] text-center">Also, here's a message from <span class="font-bold"><%= message.sender %></span>:
+            <p class="text-[14px] text-slate-600 sm:text-[16px] text-center">Also, here's a message from <span
+                    class="font-bold">
+                    <%= message.sender %>
+                </span>:
             </p>
             <p
-                class="text-[28px] text-slate-700 sm:text-[36px] sm:leading-[44px] mt-5 + text-justify sm:text-center leading-[38px] font-hand">
+                class="text-[28px] text-slate-700 sm:text-[36px] sm:leading-[44px] mt-5 text-center leading-[38px] font-hand">
                 <%= message.content %>
             </p>
         </div>

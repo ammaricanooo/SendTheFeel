@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Send The Feel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -55,7 +56,7 @@
                 <% } else { %>
                 <% messages.forEach(message=> { %>
                     <div
-                        class="flex flex-col justify-between max-w-sm w-full h-full border border-[#D9D9D9] rounded-xl overflow-hidden bg-card shadow">
+                        class="flex flex-col justify-between w-full sm:max-w-sm h-full border border-[#D9D9D9] rounded-xl overflow-hidden bg-card shadow">
                         <a target="_blank" rel="noopener noreferrer"
                             class="flex flex-col gap-4 w-full h-full p-4 transition-colors duration-200 cursor-pointer"
                             href="/details/<%= message.slug %>">
@@ -65,7 +66,7 @@
                                     <%= message.recipient %>
                                 </p>
                             </div>
-                            <div class="font-hand pb-1.5 justify-self-start text-2xl text-gray-950 sm:text-3xl">
+                            <div class="font-hand pb-1.5 justify-self-start text-2xl text-gray-950 sm:text-3xl line-clamp-3">
                                 <%= message.content %>
                             </div>
                         </a>
